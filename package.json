@@ -10,7 +10,9 @@
   "scripts": {
     "dev": "docker compose up -d && concurrently -n backend,frontend -c blue,green \"npm run dev -w backend\" \"npm run dev -w frontend\"",
     "lint": "eslint .",
-    "format": "prettier --check ."
+    "format": "prettier --check .",
+    "migrate:up": "npm run migrate:up -w backend",
+    "migrate:down": "npm run migrate:down -w backend"
   },
   "devDependencies": {
     "@eslint/js": "^9",

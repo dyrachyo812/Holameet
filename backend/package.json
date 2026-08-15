@@ -4,12 +4,16 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "tsx watch src/index.ts"
+    "dev": "tsx watch src/index.ts",
+    "migrate:up": "node-pg-migrate up --envPath ../.env",
+    "migrate:down": "node-pg-migrate down --envPath ../.env"
   },
   "dependencies": {
     "@holameet/shared": "*",
     "dotenv": "^16",
-    "express": "^4"
+    "express": "^4",
+    "node-pg-migrate": "^9.0.0",
+    "pg": "^8.23.0"
   },
   "devDependencies": {
     "@types/express": "^4",
