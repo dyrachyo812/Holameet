@@ -1,3 +1,4 @@
+import type { HealthResponse } from '@holameet/shared'
 import dotenv from 'dotenv'
 import express from 'express'
 import path from 'node:path'
@@ -13,7 +14,8 @@ const app = express()
 const port = Number(process.env.BACKEND_PORT) || 3000
 
 app.get('/health', (request, response) => {
-  response.json({ status: 'ok' })
+  const body: HealthResponse = { status: 'ok' }
+  response.json(body)
 })
 
 app.listen(port)

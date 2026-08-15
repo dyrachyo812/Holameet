@@ -1,6 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { App } from './App'
+import './api/contract'
 import { uk } from './i18n/uk'
 import './index.css'
 
