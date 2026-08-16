@@ -1,21 +1,5 @@
-import type { HealthResponse } from '@holameet/shared'
-import dotenv from 'dotenv'
-import express from 'express'
-import path from 'node:path'
-import { fileURLToPath } from 'node:url'
+import './loadEnv.js'
+import { createApp } from './app.js'
 
-const rootDir = path.resolve(
-  path.dirname(fileURLToPath(import.meta.url)),
-  '../..',
-)
-dotenv.config({ path: path.join(rootDir, '.env') })
-
-const app = express()
 const port = Number(process.env.BACKEND_PORT) || 3000
-
-app.get('/health', (request, response) => {
-  const body: HealthResponse = { status: 'ok' }
-  response.json(body)
-})
-
-app.listen(port)
+createApp().listen(port)
