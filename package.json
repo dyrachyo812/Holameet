@@ -12,7 +12,8 @@
     "lint": "eslint .",
     "format": "prettier --check .",
     "migrate:up": "npm run migrate:up -w backend",
-    "migrate:down": "npm run migrate:down -w backend"
+    "migrate:down": "npm run migrate:down -w backend",
+    "test": "npm run test -w backend"
   },
   "devDependencies": {
     "@eslint/js": "^9",
