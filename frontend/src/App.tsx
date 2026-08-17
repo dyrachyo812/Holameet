@@ -43,11 +43,13 @@ export function App() {
   return (
     <main className="min-h-screen">
       <header className="border-b border-zinc-200 bg-white">
-        <div className="mx-auto flex h-14 max-w-2xl items-center px-6">
+        <div
+          className={`mx-auto flex h-14 items-center px-6 ${booking ? 'max-w-3xl' : 'max-w-2xl'}`}
+        >
           <span className="text-sm font-semibold tracking-tight">{uk.appName}</span>
         </div>
       </header>
-      <div className="mx-auto max-w-2xl px-6 py-10">
+      <div className={`mx-auto px-6 py-10 ${booking ? 'max-w-3xl' : 'max-w-2xl'}`}>
         {booking ? (
           <PublicBookingPage username={booking.username} eventSlug={booking.eventSlug} />
         ) : (
