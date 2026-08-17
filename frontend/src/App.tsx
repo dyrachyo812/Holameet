@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { getMe, type UserProfile } from './api/client'
 import { AuthForm } from './auth/AuthForm'
 import { uk } from './i18n/uk'
-import { ProfileForm } from './profile/ProfileForm'
+import { Dashboard } from './dashboard/Dashboard'
 import { PublicBookingPage } from './public/PublicBookingPage'
 
 function publicRoute() {
@@ -68,7 +68,7 @@ export function App() {
             ) : null}
             {ready ? (
               user ? (
-                <ProfileForm
+                <Dashboard
                   user={user}
                   onUserChange={setUser}
                   onLogout={() => setUser(null)}

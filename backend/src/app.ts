@@ -3,8 +3,11 @@ import type { HealthResponse } from '@holameet/shared'
 import cookieSession from 'cookie-session'
 import express from 'express'
 import { authRouter } from './auth/routes.js'
+import { bookingsRouter } from './bookings/routes.js'
 import { calendarRouter } from './calendar/routes.js'
+import { eventTypesRouter } from './eventTypes/routes.js'
 import { publicRouter } from './public/routes.js'
+import { statsRouter } from './stats/routes.js'
 import { usersRouter } from './users/routes.js'
 
 export function createApp() {
@@ -26,6 +29,9 @@ export function createApp() {
   )
   app.use(authRouter)
   app.use(usersRouter)
+  app.use(eventTypesRouter)
+  app.use(bookingsRouter)
+  app.use(statsRouter)
   app.use(calendarRouter)
   app.use(publicRouter)
   app.get('/health', (request, response) => {

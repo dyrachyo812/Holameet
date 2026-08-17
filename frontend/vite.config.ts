@@ -17,6 +17,9 @@ export default defineConfig(({ mode }) => {
         '/health': backendOrigin,
         '/public': backendOrigin,
         '/calendar': backendOrigin,
+        '/event-types': backendOrigin,
+        '/bookings': backendOrigin,
+        '/stats': backendOrigin,
       },
     },
   }

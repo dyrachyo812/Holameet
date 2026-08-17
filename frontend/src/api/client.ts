@@ -15,6 +15,14 @@ import type {
   CalendarConnectResponse,
   CalendarDisconnectResponse,
   UserProfile,
+  EventTypeListResponse,
+  EventTypeResponse,
+  CreateEventTypeRequest,
+  UpdateEventTypeRequest,
+  BookingListQuery,
+  BookingListResponse,
+  StatsQuery,
+  StatsResponse,
 } from '@holameet/shared'
 import { apiRoutes } from '@holameet/shared'
 
@@ -114,6 +122,45 @@ export function disconnectCalendar() {
   return requestJson<CalendarDisconnectResponse>(apiRoutes.calendarDisconnect, {
     method: 'POST',
   })
+}
+
+function fillEventTypePath(eventTypeId: string) {
+  return apiRoutes.eventType.replace(':eventTypeId', encodeURIComponent(eventTypeId))
+}
+
+export function listEventTypes() {
+  return requestJson<EventTypeListResponse>(apiRoutes.eventTypes)
+}
+
+export function createEventType(payload: CreateEventTypeRequest) {
+  return requestJson<EventTypeResponse>(apiRoutes.eventTypes, {
+    method: 'POST',
+    body: JSON.stringify(payload),
+  })
+}
+
+export function updateEventType(eventTypeId: string, payload: UpdateEventTypeRequest) {
+  return requestJson<EventTypeResponse>(fillEventTypePath(eventTypeId), {
+    method: 'PATCH',
+    body: JSON.stringify(payload),
+  })
+}
+
+export function listBookings(query: BookingListQuery = {}) {
+  const search = new URLSearchParams()
+  if (query.from) {
+    search.set('from', query.from)
+  }
+  if (query.to) {
+    search.set('to', query.to)
+  }
+  const suffix = search.toString() ? `?${search.toString()}` : ''
+  return requestJson<BookingListResponse>(`${apiRoutes.bookings}${suffix}`)
+}
+
+export function getStats(query: StatsQuery) {
+  const search = new URLSearchParams({ from: query.from, to: query.to })
+  return requestJson<StatsResponse>(`${apiRoutes.stats}?${search.toString()}`)
 }
 
 export function readErrorCode(error: unknown) {
