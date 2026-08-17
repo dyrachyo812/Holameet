@@ -16,6 +16,7 @@ function publicRoute() {
 
 export function App() {
   const booking = publicRoute()
+  const calendarNotice = new URLSearchParams(window.location.search).get('calendar')
   const [user, setUser] = useState<UserProfile | null>(null)
   const [ready, setReady] = useState(false)
 
@@ -53,6 +54,15 @@ export function App() {
           <>
             {!user ? (
               <p className="mb-6 text-center text-sm text-zinc-500">{uk.tagline}</p>
+            ) : null}
+            {calendarNotice === 'denied' ? (
+              <p className="mb-4 text-center text-sm text-red-600">{uk.calendarDenied}</p>
+            ) : null}
+            {calendarNotice === 'error' ? (
+              <p className="mb-4 text-center text-sm text-red-600">{uk.calendarError}</p>
+            ) : null}
+            {calendarNotice === 'connected' ? (
+              <p className="mb-4 text-center text-sm text-zinc-600">{uk.calendarConnected}</p>
             ) : null}
             {ready ? (
               user ? (

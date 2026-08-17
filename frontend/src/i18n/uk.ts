@@ -39,4 +39,11 @@ export const uk = {
   pickSlot: 'Оберіть час',
   yourTimezone: 'Ваш часовий пояс',
   durationMinutes: 'хв',
+  calendarTitle: 'Google Календар',
+  calendarConnect: 'Підключити календар',
+  calendarDisconnect: 'Відключити',
+  calendarConnected: 'Календар підключено',
+  calendarReconnect: 'Перепідключіть календар',
+  calendarDenied: 'Доступ до календаря відхилено',
+  calendarError: 'Не вдалося підключити календар',
 } as const

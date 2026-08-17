@@ -1,6 +1,7 @@
 import type { WorkingHours } from '@holameet/shared'
 import { DateTime } from 'luxon'
 import { pool } from '../db.js'
+import { loadGoogleBusy } from '../calendar/freeBusy.js'
 import { buildSlots } from '../availability/buildSlots.js'
 
 export type PublicEventRow = {
@@ -10,6 +11,7 @@ export type PublicEventRow = {
   durationMinutes: number
   isActive: boolean
   organizerName: string
+  userId: string
   username: string
   timezone: string
   workingHours: WorkingHours | null
@@ -24,6 +26,7 @@ export async function findPublicEvent(username: string, eventSlug: string) {
     duration_minutes: number
     is_active: boolean
     organizer_name: string
+    user_id: string
     username: string
     timezone: string
     working_hours_json: WorkingHours | null
@@ -36,6 +39,7 @@ export async function findPublicEvent(username: string, eventSlug: string) {
        event_types.duration_minutes,
        event_types.is_active,
        users.name AS organizer_name,
+       users.id AS user_id,
        users.username,
        users.timezone,
        users.working_hours_json,
@@ -57,6 +61,7 @@ export async function findPublicEvent(username: string, eventSlug: string) {
     durationMinutes: row.duration_minutes,
     isActive: row.is_active,
     organizerName: row.organizer_name,
+    userId: row.user_id,
     username: row.username,
     timezone: row.timezone,
     workingHours: row.working_hours_json,
@@ -80,6 +85,7 @@ export async function loadOccupied(eventTypeId: string) {
 
 export async function listOpenSlots(event: PublicEventRow, fromDate: string, toDate: string) {
   const occupied = await loadOccupied(event.eventTypeId)
+  const googleBusy = await loadGoogleBusy(event.userId, fromDate, toDate, event.timezone)
   return buildSlots({
     timeZone: event.timezone,
     workingHours: event.workingHours,
@@ -87,7 +93,7 @@ export async function listOpenSlots(event: PublicEventRow, fromDate: string, toD
     bufferMinutes: event.bufferMinutes,
     fromDate,
     toDate,
-    occupied,
+    occupied: [...occupied, ...googleBusy],
     nowUtc: DateTime.utc(),
   })
 }

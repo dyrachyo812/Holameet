@@ -16,6 +16,7 @@ export default defineConfig(({ mode }) => {
         '/me': backendOrigin,
         '/health': backendOrigin,
         '/public': backendOrigin,
+        '/calendar': backendOrigin,
       },
     },
   }

@@ -1,6 +1,7 @@
 import type { Weekday, WorkingHours } from '@holameet/shared'
 import { useState, type FormEvent } from 'react'
 import { logoutUser, updateMe, type UserProfile } from '../api/client'
+import { CalendarCard } from '../calendar/CalendarCard'
 import { uk } from '../i18n/uk'
 import {
   cardClass,
@@ -78,7 +79,8 @@ export function ProfileForm({ user, onUserChange, onLogout }: ProfileFormProps) 
   }
 
   return (
-    <form onSubmit={handleSubmit} className="mx-auto w-full max-w-2xl space-y-4">
+    <div className="mx-auto w-full max-w-2xl space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-4">
       <header className="flex items-center justify-between">
         <div>
           <h2 className="text-lg font-semibold tracking-tight">{uk.account}</h2>
@@ -169,5 +171,7 @@ export function ProfileForm({ user, onUserChange, onLogout }: ProfileFormProps) 
         {uk.save}
       </button>
     </form>
+    <CalendarCard />
+    </div>
   )
 }

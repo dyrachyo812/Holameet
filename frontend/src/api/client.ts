@@ -11,6 +11,9 @@ import type {
   SlotListResponse,
   CreateBookingRequest,
   CreateBookingResponse,
+  CalendarStatusResponse,
+  CalendarConnectResponse,
+  CalendarDisconnectResponse,
   UserProfile,
 } from '@holameet/shared'
 import { apiRoutes } from '@holameet/shared'
@@ -94,6 +97,22 @@ export function updateMe(payload: UpdateMeRequest) {
   return requestJson<MeResponse>(apiRoutes.me, {
     method: 'PATCH',
     body: JSON.stringify(payload),
+  })
+}
+
+export function getCalendarStatus() {
+  return requestJson<CalendarStatusResponse>(apiRoutes.calendar)
+}
+
+export function connectCalendar() {
+  return requestJson<CalendarConnectResponse>(apiRoutes.calendarConnect, {
+    method: 'POST',
+  })
+}
+
+export function disconnectCalendar() {
+  return requestJson<CalendarDisconnectResponse>(apiRoutes.calendarDisconnect, {
+    method: 'POST',
   })
 }
 
