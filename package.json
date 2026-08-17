@@ -13,6 +13,9 @@
     "format": "prettier --check .",
     "migrate:up": "npm run migrate:up -w backend",
     "migrate:down": "npm run migrate:down -w backend",
+    "migrate:prod": "npm run migrate:prod -w backend",
+    "build": "npm run build -w frontend",
+    "start": "npm run start -w backend",
     "test": "npm run test -w backend"
   },
   "devDependencies": {
