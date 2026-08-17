@@ -8,6 +8,7 @@ import { apiRoutes } from '@holameet/shared'
 import { Router } from 'express'
 import { DateTime } from 'luxon'
 import { insertBooking, SlotTakenError } from '../bookings/insertBooking.js'
+import { createGoogleEvent } from '../calendar/createEvent.js'
 import { sendError } from '../http/sendError.js'
 import { findPublicEvent, listOpenSlots } from './loadEvent.js'
 
@@ -117,6 +118,15 @@ publicRouter.post(apiRoutes.publicBookings, async (request, response) => {
       inviteeName,
       inviteeEmail,
       inviteeTz,
+      startTimeUtc: match.startUtc,
+      endTimeUtc: match.endUtc,
+    })
+    await createGoogleEvent({
+      userId: event.userId,
+      bookingId: created.id,
+      title: event.title,
+      inviteeName,
+      inviteeEmail,
       startTimeUtc: match.startUtc,
       endTimeUtc: match.endUtc,
     })
