@@ -176,6 +176,7 @@ export type CreateBookingResponse = {
     endTimeUtc: IsoDateTime
     status: 'confirmed'
   }
+  telegramDeepLink: string | null
 }
 
 export type Slot = {

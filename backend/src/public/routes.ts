@@ -10,6 +10,7 @@ import { DateTime } from 'luxon'
 import { insertBooking, SlotTakenError } from '../bookings/insertBooking.js'
 import { createGoogleEvent } from '../calendar/createEvent.js'
 import { sendError } from '../http/sendError.js'
+import { afterBookingConfirmed } from '../telegram/afterBooking.js'
 import { findPublicEvent, listOpenSlots } from './loadEvent.js'
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -121,6 +122,10 @@ publicRouter.post(apiRoutes.publicBookings, async (request, response) => {
       startTimeUtc: match.startUtc,
       endTimeUtc: match.endUtc,
     })
+    if (!created?.id) {
+      sendError(response, 500, 'internalError', 'Booking failed')
+      return
+    }
     await createGoogleEvent({
       userId: event.userId,
       bookingId: created.id,
@@ -130,6 +135,7 @@ publicRouter.post(apiRoutes.publicBookings, async (request, response) => {
       startTimeUtc: match.startUtc,
       endTimeUtc: match.endUtc,
     })
+    const telegramDeepLink = await afterBookingConfirmed(created.id, match.startUtc)
     const payload: CreateBookingResponse = {
       booking: {
         id: created.id,
@@ -137,6 +143,7 @@ publicRouter.post(apiRoutes.publicBookings, async (request, response) => {
         endTimeUtc: match.endUtc.toISO() ?? '',
         status: 'confirmed',
       },
+      telegramDeepLink,
     }
     response.status(201).json(payload)
   } catch (error) {

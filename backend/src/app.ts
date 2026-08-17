@@ -8,6 +8,7 @@ import { calendarRouter } from './calendar/routes.js'
 import { eventTypesRouter } from './eventTypes/routes.js'
 import { publicRouter } from './public/routes.js'
 import { statsRouter } from './stats/routes.js'
+import { telegramRouter } from './telegram/routes.js'
 import { usersRouter } from './users/routes.js'
 
 export function createApp() {
@@ -33,6 +34,7 @@ export function createApp() {
   app.use(bookingsRouter)
   app.use(statsRouter)
   app.use(calendarRouter)
+  app.use(telegramRouter)
   app.use(publicRouter)
   app.get('/health', (request, response) => {
     const body: HealthResponse = { status: 'ok' }
