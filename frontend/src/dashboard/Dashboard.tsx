@@ -3,6 +3,7 @@ import { BookingsCard } from '../bookings/BookingsCard'
 import { EventTypesCard } from '../eventTypes/EventTypesCard'
 import { ProfileForm } from '../profile/ProfileForm'
 import { StatsCard } from '../stats/StatsCard'
+import { TelegramCard } from '../telegram/TelegramCard'
 
 type DashboardProps = {
   user: UserProfile
@@ -16,6 +17,7 @@ export function Dashboard({ user, onUserChange, onLogout }: DashboardProps) {
       <StatsCard />
       <BookingsCard timeZone={user.timezone} />
       <EventTypesCard username={user.username} />
+      <TelegramCard />
       <ProfileForm user={user} onUserChange={onUserChange} onLogout={onLogout} />
     </div>
   )

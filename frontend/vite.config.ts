@@ -20,6 +20,7 @@ export default defineConfig(({ mode }) => {
         '/event-types': backendOrigin,
         '/bookings': backendOrigin,
         '/stats': backendOrigin,
+        '/telegram': backendOrigin,
       },
     },
   }

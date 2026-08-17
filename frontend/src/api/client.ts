@@ -23,6 +23,9 @@ import type {
   BookingListResponse,
   StatsQuery,
   StatsResponse,
+  TelegramStatusResponse,
+  TelegramConnectResponse,
+  TelegramDisconnectResponse,
 } from '@holameet/shared'
 import { apiRoutes } from '@holameet/shared'
 
@@ -161,6 +164,22 @@ export function listBookings(query: BookingListQuery = {}) {
 export function getStats(query: StatsQuery) {
   const search = new URLSearchParams({ from: query.from, to: query.to })
   return requestJson<StatsResponse>(`${apiRoutes.stats}?${search.toString()}`)
+}
+
+export function getTelegramStatus() {
+  return requestJson<TelegramStatusResponse>(apiRoutes.telegram)
+}
+
+export function connectTelegram() {
+  return requestJson<TelegramConnectResponse>(apiRoutes.telegramConnect, {
+    method: 'POST',
+  })
+}
+
+export function disconnectTelegram() {
+  return requestJson<TelegramDisconnectResponse>(apiRoutes.telegramDisconnect, {
+    method: 'POST',
+  })
 }
 
 export function readErrorCode(error: unknown) {

@@ -68,4 +68,10 @@ export const uk = {
   statsTo: 'До',
   showStats: 'Показати',
   slugTaken: 'Таке посилання вже зайняте',
+  telegramTitle: 'Telegram',
+  telegramConnect: 'Підключити Telegram',
+  telegramDisconnect: 'Відключити',
+  telegramConnected: 'Telegram підключено',
+  telegramError: 'Не вдалося підключити Telegram',
+  telegramGuest: 'Отримувати нагадування в Telegram',
 } as const

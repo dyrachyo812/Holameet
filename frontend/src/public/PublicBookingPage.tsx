@@ -58,6 +58,7 @@ export function PublicBookingPage({ username, eventSlug }: PublicBookingPageProp
   const [consent, setConsent] = useState(false)
   const [errorKey, setErrorKey] = useState<keyof typeof uk | null>(null)
   const [done, setDone] = useState(false)
+  const [telegramDeepLink, setTelegramDeepLink] = useState<string | null>(null)
 
   useEffect(() => {
     const dates = rangeDates()
@@ -81,13 +82,14 @@ export function PublicBookingPage({ username, eventSlug }: PublicBookingPageProp
 
     setErrorKey(null)
     try {
-      await createPublicBooking(username, eventSlug, {
+      const result = await createPublicBooking(username, eventSlug, {
         inviteeName: name,
         inviteeEmail: email,
         inviteeTz: timeZone,
         startTimeUtc: selected,
         consentGiven: true,
       })
+      setTelegramDeepLink(result.telegramDeepLink)
       setDone(true)
     } catch (error) {
       const code = readErrorCode(error)
@@ -102,6 +104,11 @@ export function PublicBookingPage({ username, eventSlug }: PublicBookingPageProp
         <p className="mt-2 text-sm text-zinc-600">
           {event.eventType.title} · {formatSlot(selected, timeZone)}
         </p>
+        {telegramDeepLink ? (
+          <a href={telegramDeepLink} className={`${primaryButtonClass} mt-4`}>
+            {uk.telegramGuest}
+          </a>
+        ) : null}
       </section>
     )
   }
