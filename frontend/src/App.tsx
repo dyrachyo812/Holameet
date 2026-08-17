@@ -3,6 +3,7 @@ import { getMe, type UserProfile } from './api/client'
 import { AuthForm } from './auth/AuthForm'
 import { uk } from './i18n/uk'
 import { Dashboard } from './dashboard/Dashboard'
+import { PrivacyPage } from './legal/PrivacyPage'
 import { PublicBookingPage } from './public/PublicBookingPage'
 
 function publicRoute() {
@@ -14,8 +15,13 @@ function publicRoute() {
   return { username: decodeURIComponent(match[1]), eventSlug: decodeURIComponent(match[2]) }
 }
 
+function privacyRoute() {
+  return window.location.pathname === '/privacy'
+}
+
 export function App() {
   const booking = publicRoute()
+  const privacy = privacyRoute()
   const calendarNotice = new URLSearchParams(window.location.search).get('calendar')
   const [user, setUser] = useState<UserProfile | null>(null)
   const [ready, setReady] = useState(false)
@@ -32,7 +38,7 @@ export function App() {
   }
 
   useEffect(() => {
-    if (publicRoute()) {
+    if (publicRoute() || privacyRoute()) {
       setReady(true)
       return
     }
@@ -40,17 +46,26 @@ export function App() {
     void loadUser()
   }, [])
 
+  const wide = Boolean(booking || privacy)
+
   return (
     <main className="min-h-screen">
       <header className="border-b border-zinc-200 bg-white">
         <div
-          className={`mx-auto flex h-14 items-center px-6 ${booking ? 'max-w-3xl' : 'max-w-2xl'}`}
+          className={`mx-auto flex h-14 items-center justify-between px-6 ${wide ? 'max-w-3xl' : 'max-w-2xl'}`}
         >
-          <span className="text-sm font-semibold tracking-tight">{uk.appName}</span>
+          <a href="/" className="text-sm font-semibold tracking-tight">
+            {uk.appName}
+          </a>
+          <a href="/privacy" className="text-xs text-zinc-500 hover:text-zinc-900">
+            {uk.privacy}
+          </a>
         </div>
       </header>
-      <div className={`mx-auto px-6 py-10 ${booking ? 'max-w-3xl' : 'max-w-2xl'}`}>
-        {booking ? (
+      <div className={`mx-auto px-6 py-10 ${wide ? 'max-w-3xl' : 'max-w-2xl'}`}>
+        {privacy ? (
+          <PrivacyPage />
+        ) : booking ? (
           <PublicBookingPage username={booking.username} eventSlug={booking.eventSlug} />
         ) : (
           <>

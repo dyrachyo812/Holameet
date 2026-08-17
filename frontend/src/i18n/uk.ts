@@ -74,4 +74,5 @@ export const uk = {
   telegramConnected: 'Telegram підключено',
   telegramError: 'Не вдалося підключити Telegram',
   telegramGuest: 'Отримувати нагадування в Telegram',
+  privacy: 'Політика конфіденційності',
 } as const

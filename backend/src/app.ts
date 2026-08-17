@@ -10,6 +10,7 @@ import { publicRouter } from './public/routes.js'
 import { statsRouter } from './stats/routes.js'
 import { telegramRouter } from './telegram/routes.js'
 import { usersRouter } from './users/routes.js'
+import { attachFrontend } from './http/serveFrontend.js'
 
 export function createApp() {
   const cookieSecret = process.env.COOKIE_SECRET
@@ -18,6 +19,7 @@ export function createApp() {
   }
 
   const app = express()
+  app.set('trust proxy', 1)
   app.use(express.json())
   app.use(
     cookieSession({
@@ -25,6 +27,7 @@ export function createApp() {
       keys: [cookieSecret],
       httpOnly: true,
       sameSite: 'lax',
+      secure: process.env.NODE_ENV === 'production',
       maxAge: 7 * 24 * 60 * 60 * 1000,
     }),
   )
@@ -40,5 +43,6 @@ export function createApp() {
     const body: HealthResponse = { status: 'ok' }
     response.json(body)
   })
+  attachFrontend(app)
   return app
 }

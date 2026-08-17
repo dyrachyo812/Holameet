@@ -1,7 +1,7 @@
 import './loadEnv.js'
 import { createApp } from './app.js'
 
-const port = Number(process.env.BACKEND_PORT) || 3000
+const port = Number(process.env.PORT || process.env.BACKEND_PORT) || 3000
 const server = createApp().listen(port, () => {
   console.error(`Backend listening on ${port}`)
   void startBackground()
